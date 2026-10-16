@@ -1,0 +1,10 @@
+.venv/
+venv/
+env/
+pycache/
+*.pyc
+.pytest_cache/
+*.csv
+*.xlsx
+*.sqlite3
+*.db
