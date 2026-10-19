@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="陳俋璇 Kelly Chen 的履歷，專長為財務分析、資料整理、流程自動化與營運分析。">
+  <title>陳俋璇 Kelly Chen｜數據與商業分析</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172b2a;
+      --muted: #536663;
+      --line: #d8e2dc;
+      --paper: #fbfcf8;
+      --green: #155e52;
+      --mint: #dcece3;
+      --coral: #bd593d;
+      --yellow: #f2c96d;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    a { color: var(--green); }
+    a:hover { color: var(--coral); }
+
+    .hero {
+      padding: 56px max(24px, calc((100vw - 1120px) / 2));
+      color: #fff;
+      background: var(--green);
+      border-bottom: 8px solid var(--yellow);
+    }
+
+    .hero-inner, .layout, footer {
+      width: min(1120px, calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: #c7e4d5;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      margin-bottom: 4px;
+      font-family: Georgia, "Noto Serif TC", "PMingLiU", serif;
+      font-size: 2.7rem;
+      line-height: 1.2;
+    }
+
+    .hero h1 span { color: var(--yellow); }
+    .target-title { margin: 0 0 18px; color: #e1eee7; font-size: 1.1rem; }
+    .hero-summary { max-width: 760px; margin-bottom: 20px; color: #edf5f0; }
+    .traits { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0; padding: 0; list-style: none; }
+    .traits li::before { content: "+ "; color: var(--yellow); font-weight: 800; }
+    .hero-link { display: inline-block; margin-top: 22px; color: #fff; font-weight: 700; }
+    .hero-link:hover { color: var(--yellow); }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(260px, 0.8fr);
+      gap: 56px;
+      padding-block: 48px 64px;
+    }
+
+    section { margin-bottom: 48px; }
+    .section-title {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 22px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+      font-family: Georgia, "Noto Serif TC", "PMingLiU", serif;
+      font-size: 1.65rem;
+      line-height: 1.35;
+    }
+
+    .section-title::before {
+      width: 8px;
+      height: 22px;
+      background: var(--coral);
+      content: "";
+    }
+
+    .entry { margin-bottom: 34px; }
+    .entry:last-child { margin-bottom: 0; }
+    .entry h3 { margin-bottom: 2px; font-size: 1.14rem; line-height: 1.5; }
+    .entry-meta { margin-bottom: 12px; color: var(--muted); font-size: 0.93rem; }
+    .entry p { margin-bottom: 10px; }
+    ul { padding-left: 1.25rem; }
+    li + li { margin-top: 4px; }
+    .skill-line { color: var(--muted); font-size: 0.92rem; }
+    .skill-line strong { color: var(--green); }
+    .project h3 { color: var(--green); }
+    .project ol { padding-left: 1.4rem; }
+    .project ol li { margin-bottom: 14px; padding-left: 4px; }
+    .project ol li::marker { color: var(--coral); font-weight: 700; }
+    .project strong { color: var(--ink); }
+    .bio-block { margin-bottom: 26px; }
+    .bio-block h3 { color: var(--green); }
+
+    aside section { margin-bottom: 36px; }
+    aside .section-title { font-size: 1.35rem; }
+    dl { margin: 0; }
+    dt { margin-top: 14px; color: var(--green); font-weight: 700; }
+    dt:first-child { margin-top: 0; }
+    dd { margin: 2px 0 0; color: var(--muted); }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 7px; padding: 0; list-style: none; }
+    .tag-list li { margin: 0; padding: 3px 9px; border: 1px solid var(--line); border-radius: 3px; font-size: 0.88rem; }
+    .cert-group { margin-bottom: 18px; }
+    .cert-group h3 { margin-bottom: 5px; color: var(--green); font-size: 1rem; }
+    .cert-group ul { margin: 0; padding-left: 1.1rem; color: var(--muted); font-size: 0.91rem; }
+
+    footer { padding-block: 20px 32px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
+
+    @media (max-width: 760px) {
+      .hero { padding: 40px 24px; }
+      .hero-inner, .layout, footer { width: min(100% - 36px, 600px); }
+      h1 { font-size: 2.1rem; }
+      .layout { grid-template-columns: 1fr; gap: 0; padding-top: 36px; }
+      aside { padding-top: 4px; }
+      section { margin-bottom: 38px; }
+    }
+
+    @media print {
+      body { background: #fff; font-size: 10pt; }
+      .hero { padding: 24px; print-color-adjust: exact; }
+      .layout { width: 100%; grid-template-columns: 1.7fr 0.9fr; gap: 28px; padding-block: 24px; }
+      .hero-inner, footer { width: 100%; }
+      a { color: inherit; text-decoration: none; }
+      section, .entry, .project li { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">履歷・PROFILE</p>
+      <h1>陳俋璇 <span>Kelly Chen</span></h1>
+      <p class="target-title">數據分析師｜商業分析師</p>
+      <p class="hero-summary">具備 7 至 8 年工作經歷，累積財務資金管理、稅務資料分析及跨部門流程改善經驗。擅長從大量資料中找出異常、建立清晰報表，並將重複作業轉化為自動化流程。</p>
+      <ul class="traits" aria-label="個人特質">
+        <li>謹慎細心</li><li>邏輯分析</li><li>專注目標</li><li>熱愛學習</li><li>自我管理</li><li>主動積極</li>
+      </ul>
+      <a class="hero-link" href="https://www.linkedin.com/in/kelly-chen-1a68543b4" target="_blank" rel="noopener noreferrer">LinkedIn 個人檔案 ↗</a>
+    </div>
+  </header>
+
+  <main class="layout">
+    <div>
+      <section aria-labelledby="experience-title">
+        <h2 class="section-title" id="experience-title">工作經驗</h2>
+        <article class="entry">
+          <h3>財務資金管理分析師｜有福智能科技有限公司</h3>
+          <p class="entry-meta">其他金融及輔助業・30–100 人｜台北市中山區｜2026/5–2026/9（5 個月）</p>
+          <ul>
+            <li>負責國內外電匯及銀行轉帳，針對跨國交易（如三角貿易）執行資金操作與流動性規劃。</li>
+            <li>即時監控銀行餘額、利率及匯率波動，運用 Excel 進階工具或 Python 進行匯率風險評估與利息預測，提供決策支援。</li>
+            <li>彙整現金收付及銀行收支日報表，優化 QuickBooks 資料與銀行對帳單的核對流程，確保帳務準確。</li>
+            <li>協助推動財務流程數位化，將原始財務數據轉化為具商業邏輯的管理分析報告。</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <h3>稅務員｜基隆市稅務局</h3>
+          <p class="entry-meta">30–100 人｜稅務會計人員・基隆市安樂區｜2023/10–2026/5（2 年 8 個月）</p>
+          <ul>
+            <li>與金融機構合作查詢欠稅人存款資料，負責資料整理與匯入。</li>
+            <li>管理核銷報表自動化流程，運用 Excel 清理納稅義務人報表資料；優化不動產移轉清欠流程，確保資訊正確。</li>
+            <li>將原始稅務數據轉化為徵起情形分析報告，產製欠稅數分析表、移送執行月報及大額欠稅分析報告。</li>
+            <li>執行清欠計畫、欠稅人財產分析調查與移送執行，並回報各稅捐機關及賦稅署意見調查。</li>
+          </ul>
+          <p class="skill-line"><strong>技能：</strong>稅務法規、數據管制與分析、法律及政府相關知識、時間管理、跨單位溝通、主動學習、高度抗壓</p>
+        </article>
+        <article class="entry">
+          <h3>科員｜宜蘭縣政府財政稅務局</h3>
+          <p class="entry-meta">30–100 人｜稅務會計人員・宜蘭縣宜蘭市｜2020/12–2023/10（2 年 11 個月）</p>
+          <ul>
+            <li>將公告地價及公告現值更新系統資料轉換、彙整為 Excel，並與財產管理資訊系統廠商合作確認產籍資料。</li>
+            <li>管理核銷報表自動化流程；以 Excel 進階公式比對多目標系統與財產系統資料並管理異常。</li>
+            <li>跨 50 多個行政機關辦理財產異動與審核，並將原始稅務資料轉化為機關開銷分析報告。</li>
+            <li>負責債權時效管理、憑證更新、財產實體巡查及異常處理，落實動態風險監控。</li>
+          </ul>
+          <p class="skill-line"><strong>技能：</strong>財產管理系統、法令研究、專案進度管制、公有財產管理、數據彙整、內部稽核</p>
+        </article>
+        <article class="entry">
+          <h3>帳務專員｜信永中和聯合會計師事務所台中所</h3>
+          <p class="entry-meta">會計服務業・1–30 人｜查帳／審計人員・台中市西區｜2019/9–2019/11（3 個月）</p>
+          <ul>
+            <li>整理客戶原始憑證、製作財務報表，審查財會及稅會文件憑證、檢閱異常交易，維護資料正確性與稽核軌跡。</li>
+            <li>覆核稅務申報，與客戶及國稅局溝通處理查帳事宜。</li>
+            <li>入職首月補齊前任留下的半年積壓帳務，確保財務報表準時且準確產出，獲主管肯定。</li>
+          </ul>
+          <p class="skill-line"><strong>技能：</strong>會計核算、帳務處理、稅務業務、財會與審計、財務報告、細心、奇勝會計系統</p>
+        </article>
+        <article class="entry">
+          <h3>助理記帳員（時薪制）｜曾慈雅記帳士事務所</h3>
+          <p class="entry-meta">會計服務業・1–30 人｜記帳／出納／一般會計・高雄市小港區｜2018/7–2019/6（1 年）</p>
+          <ul>
+            <li>編製會計傳票、整理傳票及發票，協助營業稅申報前置作業。</li>
+            <li>由大三暑期實習生轉任工讀生，因學習能力受到肯定。</li>
+          </ul>
+          <p class="skill-line"><strong>技能：</strong>奇勝系統、會計核算、帳務處理、細心、高效率</p>
+        </article>
+        <article class="entry">
+          <h3>假日工讀｜A-bao 晨食館</h3>
+          <p class="entry-meta">餐館業・1–30 人｜餐飲服務生・彰化縣田中鎮｜2017/2–2017/8（7 個月）</p>
+          <p>飲料調製、櫃檯點餐、包餐與送餐，維持環境整潔並處理物品補給。技能：對人熱情、隨機應變、團隊合作。</p>
+        </article>
+        <article class="entry">
+          <h3>作業員｜東肯企業有限公司</h3>
+          <p class="entry-meta">紡織成衣業・30–100 人｜作業員／包裝員・彰化縣田中鎮｜2015/6–2015/8（3 個月）</p>
+          <p>整理並黏貼包裝襪類產品，達成產能及出貨目標。</p>
+        </article>
+      </section>
+
+      <section aria-labelledby="projects-title">
+        <h2 class="section-title" id="projects-title">專案作品與特殊貢獻</h2>
+        <article class="entry project">
+          <h3>跨幣別（USD／USDT）營運與即時績效分析系統</h3>
+          <p class="entry-meta">有福智能科技｜入職 1 個月內完成</p>
+          <p>針對既有試算表處理跨幣別換匯結算與損益追蹤的低效及高錯誤風險，重構端到端流程，推動內部雲端營運平台與即時戰情儀表板，實現資料自動匯入、即時利潤試算與數據決策。</p>
+          <ol>
+            <li><strong>流程自動化與瓶頸消除：</strong>以主要 Portal 資料設計自動批次匯入，減少 70% 以上重複登打工時，並保留動態成本匯率調整機制。</li>
+            <li><strong>作業流程重構：</strong>設計兩步驟非同步確認機制，先鎖定交易條件、到帳後補填結算，降低跨平台對帳時差及資訊遺漏。</li>
+            <li><strong>即時損益追蹤：</strong>建立自動成本分攤與利潤試算邏輯，支援 FIFO 與加權平均；從月底整理改為每筆交易完成即掌握損益，降低人為計算錯誤。</li>
+            <li><strong>管理儀表板：</strong>規劃多維度看板，即時呈現 USD／USDT 交易量、利潤及月成長率，協助團隊與管理階層掌握營運並加速決策。</li>
+          </ol>
+        </article>
+        <article class="entry project">
+          <h3>AutoTools｜跨國營運流程自動化表單派發系統</h3>
+          <p class="entry-meta">使用技術：PowerShell、Google Apps Script</p>
+          <p>盤點跨國團隊結算憑證及跨部門交付瓶頸，重構資料登帳、Word 表單產製、水單搜尋、附件與寄發流程，建置資料解析、附件匹配、草稿建構及自動歸檔工具鏈。</p>
+          <ol>
+            <li><strong>端到端流程自動化：</strong>串接資料驗證、表單批次生成、水單匹配、Gmail 草稿批量生成及結算後歸檔，減少 80% 以上重複人工作業。</li>
+            <li><strong>附件智能匹配：</strong>跨信箱與雲端硬碟檢索檔案，自動處理同客戶同日拆單、多筆付款證明整合及外幣牌價截圖綁定，降低漏檔與附件錯置風險。</li>
+            <li><strong>人機協作防呆：</strong>採用「系統產生草稿、人工核對後寄出」架構，加入 Preflight 檢核及跨信箱 8 個月防重複掃描，達成零重複發信與 100% 準確率。</li>
+            <li><strong>自動歸檔與資料治理：</strong>寄出後將憑證與水單分流至客戶資料夾及月度審計目錄。</li>
+            <li><strong>跨國導入與標準化：</strong>獨立撰寫雙語《AutoTools 操作手冊》與排錯指引，協助團隊導入並降低交接及培訓成本。</li>
+          </ol>
+        </article>
+      </section>
+
+      <section aria-labelledby="bio-title">
+        <h2 class="section-title" id="bio-title">自傳</h2>
+        <div class="bio-block">
+          <p>我畢業於國立高雄科技大學財富與稅務管理系財政稅務組，修畢稅務會計及財政稅務學程，曾於公務體系處理大量稅務資料與財產報表審查。過去 5 年的公職經驗讓我看見，稅務稽核的核心在於解決欠稅問題並建立完善制度。我曾運用 Excel VLOOKUP 勾稽大量資料、找出錯誤並提升效率，進而對將資料邏輯運用於投資決策分析產生興趣。精準數據是投資決策的基礎，而打造工具、支援靈活決策正是我希望投入的方向。</p>
+          <p>我希望跳脫傳統學習框架，發揮細心、異常洞察、邏輯拆解與跨單位溝通能力，持續培養運用資料工具識別異常、建立數據產品的思維，結合數據分析在金融領域創造價值。</p>
+        </div>
+        <div class="bio-block">
+          <h3>重視細節與邏輯推論，從數據挖掘問題</h3>
+          <p>公職經驗讓我養成深究異常脈絡的習慣。抽查學校時，我發現校園內有團體招牌，便查詢場地租借資料、團體網站及稅務系統中的扣繳單位資料，發現「校園設址」並非單一個案，並在檢討會議請主管機關督促限期改善。</p>
+          <p>由於每個機關約 6 年才實地查核一次，我會同時審查書面資料、巡視環境，並在抽查前調閱公庫收入解繳資料進行勾稽，藉由深度分析報表主動察覺異常使用情形。</p>
+        </div>
+        <div class="bio-block">
+          <h3>跨單位協作與溝通</h3>
+          <p>我運用稅務系統整理原始資料，比對學校設立扣繳單位情形，製作 Excel 報表並追溯原始契約，發現未依規定計費後成功追回流失款項。</p>
+          <p>案件處理中，我整合國稅局、教育處、社會處、建設處及局長至縣長等不同層級意見；事前確認相關設立條件，彙整異常學校名冊交由教育處督導 17 所學校，並依特殊案例查核、協調建物所有權認定及逐級簽核。我能擔任協調窗口，追蹤改善進度並在高壓環境中維持跨部門合作。</p>
+        </div>
+        <div class="bio-block">
+          <h3>熱愛學習，持續精進</h3>
+          <p>目前自主學習 MySQL 與 Python，從基礎紮實建構，期望運用工具建立自動化分析流程與投資工具。我具備數字敏銳度、邏輯拆解及跨單位溝通能力，期待在高壓問題情境中持續分析、創造價值，與團隊共同成長。</p>
+        </div>
+      </section>
+    </div>
+
+    <aside>
+      <section aria-labelledby="conditions-title">
+        <h2 class="section-title" id="conditions-title">求職條件</h2>
+        <dl>
+          <dt>希望職稱</dt><dd>數據分析師、商業分析師</dd>
+          <dt>希望職類</dt><dd>數據／資料分析師、系統分析師、軟體專案管理師、營運管理師、系統整合／ERP 專案師</dd>
+          <dt>希望產業</dt><dd>電子資訊、軟體、半導體、金融機構及相關產業</dd>
+          <dt>工作性質與時段</dt><dd>全職・日班</dd>
+          <dt>可上班日</dt><dd>錄取後三週</dd>
+          <dt>希望待遇</dt><dd>依公司規定</dd>
+          <dt>希望地點</dt><dd>台北市</dd>
+          <dt>遠端工作</dt><dd>有意願</dd>
+        </dl>
+        <h3 style="margin: 20px 0 6px; color: var(--green); font-size: 1rem;">期望工作內容</h3>
+        <ul>
+          <li>蒐集、清洗、分析及處理公司內部數據。</li>
+          <li>進行資料分析、建模與預測。</li>
+          <li>製作報表與視覺化圖表，提供決策依據。</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="education-title">
+        <h2 class="section-title" id="education-title">學歷</h2>
+        <h3>國立高雄科技大學</h3>
+        <p>財富與稅務管理系<br>財政稅務組・四技畢業</p>
+        <p class="entry-meta">2015/9–2019/6</p>
+      </section>
+
+      <section aria-labelledby="skills-title">
+        <h2 class="section-title" id="skills-title">專長與技能</h2>
+        <dl>
+          <dt>財務與會計</dt><dd>會計核算、帳務處理、會計與審計知識、理財規劃實務</dd>
+          <dt>辦公室應用</dt><dd>Excel、PowerPoint、Word</dd>
+          <dt>程式與自動化</dt><dd>Python、MySQL（自主學習中）、PowerShell、Google Apps Script</dd>
+          <dt>其他工具</dt><dd>奇勝會計軟體、QuickBooks</dd>
+          <dt>中文打字</dt><dd>每分鐘 50–75 字</dd>
+          <dt>英文打字</dt><dd>每分鐘 20–50 字</dd>
+        </dl>
+      </section>
+
+      <section aria-labelledby="languages-title">
+        <h2 class="section-title" id="languages-title">語言能力</h2>
+        <dl><dt>英文</dt><dd>聽、說、讀、寫：略懂</dd><dt>台語</dt><dd>略懂</dd></dl>
+      </section>
+
+      <section aria-labelledby="certificates-title">
+        <h2 class="section-title" id="certificates-title">證照與資格</h2>
+        <div class="cert-group"><h3>財務會計</h3><ul><li>丙級會計事務技術士（勞動部勞動力發展署技能檢定中心）</li><li>丙級會計資訊技術士</li><li>TQC-OA 電腦會計（中華民國電腦技能基金會）</li></ul></div>
+        <div class="cert-group"><h3>金融投顧</h3><ul><li>證券商業務員（證券暨期貨市場發展基金會）</li><li>金融市場常識與職業道德（台灣金融研訓院）</li></ul></div>
+        <div class="cert-group"><h3>電腦資訊</h3><ul><li>丙級電腦軟體應用技術士（勞動部勞動力發展署技能檢定中心）</li></ul></div>
+        <div class="cert-group"><h3>企劃與服務</h3><ul><li>TBSA 商務企劃能力檢定初級</li><li>丙級門市服務技術士</li></ul></div>
+        <div class="cert-group"><h3>英語</h3><ul><li>TOEIC 多益測驗 550 分（ETS）</li><li>GEPT 全民英檢初級（LTTC）</li><li>Cambridge English Exams 劍橋國際英語認證 A2</li></ul></div>
+        <div class="cert-group"><h3>其他</h3><ul><li>採購專業人員基礎訓練及格證書</li><li>促進民間參與公共建設專業人員</li><li>無人機專業操作證培訓課程結訓證書（國立宜蘭大學，2021/12）</li></ul><p>任職宜蘭縣政府財政稅務局期間，因應廣大轄區土地巡查需求，參與無人機操作培訓，嘗試以無人機改善傳統人力巡查盲點。</p></div>
+      </section>
+    </aside>
+  </main>
+
+  <footer>
+    <p>陳俋璇 Kelly Chen｜數據分析・商業分析</p>
+    <a href="https://www.linkedin.com/in/kelly-chen-1a68543b4" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  </footer>
+</body>
+</html>
