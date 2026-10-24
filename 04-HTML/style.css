@@ -1,0 +1,24 @@
+/*最高級 html inline styles(直接寫在標籤上) */
+/*CSS 選取器(1,0,0): id */
+#firstP {
+  color: crimson; 
+}
+/*CSS 選取器(0,1,0): class */
+.male {
+  color: blue;
+}
+.female {
+  color: pink;
+}
+
+老師 {   請勿使用空白規則集}
+
+}/*CSS 選取
+器(0,0,1): html */
+p {
+  color: lightgreen;
+}
+ul {
+    list-style-type:;
+    margin-left: 20px;
+}
