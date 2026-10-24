@@ -34,6 +34,13 @@ mystr7 = f"A = {A}"
 mystr8 = f'A = {A}'
 mystr9 = f'A = {A * 20}'
 
+my_money = 1000000
+
+print(f"{my_money:,}")     # 印出 1,000,000
+print(f"{my_money:.2f}")   # 印出 1000000.00
+print(f"{my_money:,.2f}")  # 印出 1,000,000.00
+
+
 print(mystr)
 print(mystr2)
 print(mystr3)
