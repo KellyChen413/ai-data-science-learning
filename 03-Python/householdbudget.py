@@ -30,8 +30,16 @@ raw_expenses = [
         "amount": "60",
     },
 ]
+
 # 使用者輸入本月預算
-budget=float(input("請輸入本月預算:"))
+# 如果金額是浮點數，就列出錯誤
+while True:
+    budget_text = input("請輸入本月預算:").strip()
+    try:
+        budget = int(budget_text)
+        break
+    except ValueError:
+        print("錯誤：金額不能包含小數點，請重新輸入！")
 # 資料清洗-交代工作
 def clean_text(text,default):
     cleaned = text.strip()
