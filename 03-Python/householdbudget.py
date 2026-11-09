@@ -33,6 +33,7 @@ raw_expenses = [
 
 # 使用者輸入本月預算
 # 如果金額是浮點數，就列出錯誤
+"""
 while True:
     budget_text = input("請輸入本月預算:").strip()
     try:
@@ -40,6 +41,13 @@ while True:
         break
     except ValueError:
         print("錯誤：金額不能包含小數點，請重新輸入！")
+"""
+#寫法二
+budget = input("請輸入本月預算：")
+
+while budget.isdigit() == False:
+    budget = input("輸入錯誤，預算必須是正整數，不可包含小數，請輸入本月預算：")
+budget = int(budget)
 # 資料清洗-交代工作
 def clean_text(text,default):
     cleaned = text.strip()
@@ -127,4 +135,5 @@ for expense in expenses:
 # 排序
 sorted_expenses = sorted(valid_expenses, key=get_amount,reverse=True)
 # 出報表
+#寫法一 print_report(sorted_expenses, budget)
 print_report(sorted_expenses, budget)
