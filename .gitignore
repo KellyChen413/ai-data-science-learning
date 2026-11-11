@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+
+# nested practice repos (not part of this repo)
+git-revert-demo/
+python-web-crawler-demo/
