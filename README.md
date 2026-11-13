@@ -16,7 +16,7 @@ Focus: SQL, Python (pandas), Tableau, and Git. Work is practice-level and update
 | `05-Git` | Git practice: commits, branches, reverting changes |
 | `06-Python-muti-list` | pandas practice: DataFrame / Series, column selection, boolean indexing, groupby, missing values (`isna` / `fillna` / `dropna`), timestamps; `uv` project files (`pyproject.toml`, `uv.lock`) |
 | `07-Tableau` | Tableau workbooks from class exercises |
-| `08-ELK` | ELK (Elasticsearch / Kibana) practice: movie-dataset aggregations exported from Kibana as CSV (`1112`), Kibana Lens charts — heatmap, time-series bar, pie (`1113`) |
+| `08-ELK` | ELK (Elasticsearch / Kibana) practice: movie-dataset aggregations exported from Kibana as CSV (`1112`), Kibana Lens charts — heatmap, time-series bar, pie (`1113`); Kibana saved-objects export of the 1112–1113 dashboards (`1112-1113_Daseboard.ndjson`, import via Stack Management → Saved Objects) |
 | `python-env-lab` | Python environment setup with `uv` (`pyproject.toml`, `requirements.txt`) |
 | `src` | Package skeleton created with `uv` |
 
