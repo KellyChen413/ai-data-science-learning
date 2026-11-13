@@ -14,8 +14,9 @@ Focus: SQL, Python (pandas), Tableau, and Git. Work is practice-level and update
 | `03-Python` | Python basics: data cleaning and summarizing a household expense list (`householdbudget.py`), BMI calculator, control flow |
 | `04-HTML` | Basic HTML / CSS pages |
 | `05-Git` | Git practice: commits, branches, reverting changes |
-| `06-Python-muti-list` | pandas practice: DataFrame / Series, column selection, boolean indexing, groupby, missing values (`isna` / `fillna` / `dropna`), timestamps |
-| `06-Tableau` | Tableau workbooks from class exercises |
+| `06-Python-muti-list` | pandas practice: DataFrame / Series, column selection, boolean indexing, groupby, missing values (`isna` / `fillna` / `dropna`), timestamps; `uv` project files (`pyproject.toml`, `uv.lock`) |
+| `07-Tableau` | Tableau workbooks from class exercises |
+| `08-ELK` | ELK (Elasticsearch / Kibana) practice: movie-dataset aggregations exported from Kibana as CSV (`1112`) |
 | `python-env-lab` | Python environment setup with `uv` (`pyproject.toml`, `requirements.txt`) |
 | `src` | Package skeleton created with `uv` |
 
