@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2027 尾牙專案 WBS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: 熱鬧但有條理——總部 PM 給老闆看的執行計畫
+   IDEA: 春節紅包袋＋專案甘特表，紅底金字的「開工帖」
+   PICTURE: 可展開的 WBS 樹狀表，每列右側畫甘特條；首屏即是工作本身
+   COLOUR and TYPE: 朱紅主色、金色輔色、翡翠綠只標「已完成」；Noto Serif TC 標題 + Noto Sans TC 內文
+   LAYOUT: 紅色抬頭帶關鍵數字 → WBS 表 → 當日流程 → 獎項與預算試算 */
+:root{color-scheme:light dark;
+--bg:light-dark(#fffaf3,#1a0d0d);--ink:light-dark(#2a1414,#f6e9df);--mute:light-dark(#7a5c52,#c2a79c);
+--red:#b3121f;--red2:light-dark(#8e0d18,#d42a37);--gold:light-dark(#b8860b,#e8b84a);--goldbg:light-dark(#fbefd2,#3a2a12);
+--line:light-dark(#ecd9c8,#3d2422);--card:light-dark(#ffffff,#241312);--ok:light-dark(#0f7a4d,#3fcf8e);--run:light-dark(#c25e00,#ffa14a)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Noto Sans TC",system-ui,sans-serif;overflow-x:clip}
+h1,h2,.serif{font-family:"Noto Serif TC",serif}
+.band{padding:clamp(28px,4vw,56px) max(5vw,16px)}.wrap{max-width:1240px;margin:0 auto}
+.hero{background:var(--red);color:#fff6e6;position:relative;overflow:hidden}
+.hero svg.deco{position:absolute;right:-40px;top:-30px;width:360px;height:360px;opacity:.18;pointer-events:none}
+.hero h1{font-size:clamp(32px,5vw,50px);line-height:1.1;margin:0 0 10px;text-wrap:balance;font-weight:900}
+.hero p{margin:0;max-width:62ch;color:#ffe3c2}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:12px;margin-top:24px}
+.kpi{background:rgba(0,0,0,.18);border:1px solid rgba(255,215,140,.35);border-radius:10px;padding:12px 14px}
+.kpi b{display:block;font:700 clamp(22px,3vw,28px)/1.2 "Noto Serif TC",serif;color:#ffd77a;white-space:nowrap}
+.kpi span{font-size:14px;color:#ffe3c2}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.nav a{color:#fff6e6;border:1px solid rgba(255,215,140,.5);border-radius:99px;padding:8px 14px;text-decoration:none;font-size:15px}
+.nav a:hover,.nav a:focus-visible{background:#ffd77a;color:#5a0a10;outline:none}
+h2{font-size:clamp(24px,3vw,32px);line-height:1.15;margin:0 0 6px}
+.sub{color:var(--mute);margin:0 0 18px;font-size:15px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;align-items:center}
+button,select,input{font:inherit;font-size:16px;color:var(--ink)}
+.btn{min-height:44px;padding:0 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);cursor:pointer}
+.btn[aria-pressed=true]{background:var(--red);color:#fff;border-color:var(--red)}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.st:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;background:var(--card);border-radius:10px;overflow:hidden}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;font-size:15px}
+th{background:var(--goldbg);font-weight:700;white-space:nowrap}
+.wbs{min-width:1500px}
+.wbs td.id{font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--mute)}
+.wbs tr.l1 td{background:light-dark(#fff3e2,#2e1816);font-weight:700}
+.wbs tr.l1 td.task{font-family:"Noto Serif TC",serif;font-size:16px}
+.wbs tr.l2 td.task{padding-left:28px}
+.wbs .num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.wbs .date{white-space:nowrap;font-variant-numeric:tabular-nums}
+.tg{border:0;background:none;cursor:pointer;width:28px;height:28px;font-size:14px;color:var(--red2)}
+.crit{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--red2);border-radius:4px;padding:0 6px;margin-left:6px;vertical-align:2px}
+.st{border:1px solid currentColor;border-radius:99px;padding:3px 10px;font-size:13px;background:none;cursor:pointer;white-space:nowrap;min-height:30px}
+.st.s0{color:var(--mute)}.st.s1{color:var(--run)}.st.s2{color:var(--ok)}
+.res{font-size:14px;color:var(--mute);max-width:220px}
+.gantt{position:relative;height:18px;width:240px;background:repeating-linear-gradient(90deg,transparent 0 31px,var(--line) 31px 32px)}
+.gantt i{position:absolute;top:3px;height:12px;border-radius:3px;background:var(--gold)}
+.l1 .gantt i{background:var(--red2);top:5px;height:8px}
+.gantt .today{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--red2)}
+.gh{display:flex;justify-content:space-between;width:240px;font-size:12px;color:var(--mute);font-weight:400}
+.legend{font-size:14px;color:var(--mute)}
+.ros{display:grid;gap:0;max-width:880px}
+.ros div{display:grid;grid-template-columns:6.5em minmax(0,1fr);gap:16px;padding:14px 0;border-bottom:1px dashed var(--line)}
+.ros time{font:900 clamp(24px,3.4vw,32px)/1 "Noto Serif TC",serif;color:var(--red2);white-space:nowrap}
+.ros b{display:block;font-size:17px}.ros span{color:var(--mute);font-size:15px}
+.ros .hot time{color:var(--gold)}.ros .hot b::after{content:"高潮";font-size:12px;color:#fff;background:var(--gold);border-radius:4px;padding:1px 6px;margin-left:8px;vertical-align:2px}
+.alt{background:var(--goldbg)}
+.grid2{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start}
+@media(max-width:860px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.form{display:grid;gap:10px}
+.form label{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:10px;align-items:center;font-size:15px}
+.form input{min-height:44px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);text-align:right;width:100%}
+.total{background:var(--red);color:#fff6e6;border-radius:12px;padding:22px}
+.total b{display:block;font:900 clamp(32px,5vw,46px)/1.1 "Noto Serif TC",serif;color:#ffd77a;white-space:nowrap}
+.bars{margin-top:16px;display:grid;gap:8px}
+.bar{font-size:14px}.bar div{height:10px;border-radius:5px;background:rgba(0,0,0,.25);margin-top:3px;overflow:hidden}.bar div i{display:block;height:100%;background:#ffd77a}
+.note{font-size:14px;color:var(--mute);margin-top:10px}
+.prize td:nth-child(n+2){text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.risk li{margin-bottom:8px}
+footer{font-size:14px;color:var(--mute)}
+@media(max-width:600px){.ros div{grid-template-columns:minmax(0,1fr);gap:4px}.form label{grid-template-columns:minmax(0,1fr) 120px}
+table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:7.5em;margin-inline-start:-8em;white-space:normal}.stack td:empty{display:none}}
+@media(prefers-reduced-motion:no-preference){.total b{transition:color .3s}}
+html{scroll-padding-top:20px}
+</style>
+<script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
+</head>
+<body>
+<header class="band hero">
+  <svg class="deco" viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke="#ffd77a" stroke-width="3"><circle cx="100" cy="100" r="90"/><circle cx="100" cy="100" r="70"/><path d="M100 10v180M10 100h180M36 36l128 128M164 36L36 164"/></g></svg>
+  <div class="wrap">
+    <h1>2027 年度尾牙「金兔迎春・全員有獎」專案 WBS</h1>
+    <p>AI 總部企劃與 PM 規劃：知名藝人壓軸、部門表演競賽、全場即時互動、現金抽獎，加上人人一台 iPhone。嚴格依照範本 11 個欄位拆解為 9 大工作包、37 個可指派、可估算、可驗收的工作包。</p>
+    <div class="kpis">
+      <div class="kpi"><b>2027/1/22（五）</b><span>活動日（暫定，春節前兩週）</span></div>
+      <div class="kpi"><b id="kCount">—</b><span>工作包（另含 9 個主項）</span></div>
+      <div class="kpi"><b id="kDays">—</b><span>距活動日剩餘天數</span></div>
+      <div class="kpi"><b id="kBudget">—</b><span>總預算試算（可在下方調整）</span></div>
+    </div>
+    <nav class="nav" aria-label="章節"><a href="#wbs">WBS 工作分解</a><a href="#ros">當日流程</a><a href="#prize">獎項與預算</a><a href="#risk">風險與備案</a><a href="#tbc">待確認事項</a></nav>
+  </div>
+</header>
+
+<section class="band" id="wbs"><div class="wrap">
+  <h2>工作分解結構：先鎖藝人與場地，其餘環環相扣</h2>
+  <p class="sub">欄位與範本一致，未增減。「期間」為日曆天；「完成工作天數」為扣除週末與元旦的工作天；「下周預計要做」以 2026/11/30–12/4 為準。點「▾」收合主項，點狀態可切換（只存在你的瀏覽器）。</p>
+  <div class="tools">
+    <button class="btn" id="expAll">全部展開</button><button class="btn" id="colAll">全部收合</button>
+    <button class="btn" id="nextOnly" aria-pressed="false">只看下周要做</button>
+    <button class="btn" id="copyTsv">複製表格（可直接貼入範本）</button>
+    <span class="legend" id="prog" aria-live="polite"></span>
+  </div>
+  <div class="scroll"><table class="wbs" id="wbsT"><thead><tr><th>WBS編號</th><th>工作/任務</th><th>期間</th><th>起始日</th><th>預計完成日</th><th>狀態</th><th>所需資源</th><th>下周預計要做</th><th>完成工作天數</th><th>前置工作</th><th>所需資源</th></tr></thead><tbody></tbody></table></div>
+  <details style="margin-top:14px"><summary style="cursor:pointer;min-height:44px">顯示可貼入範本的純文字（Tab 分隔）</summary><pre id="tsvBox" style="background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;font-size:13px;max-height:320px"></pre></details>
+</div></section>
+
+<section class="band alt" id="ros"><div class="wrap">
+  <h2>活動當日流程：每 20–30 分鐘一個高點，壓軸留給藝人與 iPhone</h2>
+  <p class="sub">2027/1/22（五）17:00–21:15，對應 WBS 8.3。</p>
+  <div class="ros" id="rosL"></div>
+</div></section>
+
+<section class="band" id="prize"><div class="wrap grid2">
+  <div>
+    <h2>獎項結構：大獎製造尖叫，人人有獎讓沒中的人也開心</h2>
+    <p class="sub">現金獎數量與金額可依預算調整，iPhone 依出席人數計算。</p>
+    <div class="scroll"><table class="prize stack"><thead><tr><th>獎項</th><th>名額</th><th>金額／品項</th><th>小計</th></tr></thead><tbody id="prizeB"></tbody></table></div>
+    <p class="note">稅務提醒：員工因尾牙抽中之現金與獎品，實務上列為員工<strong>薪資所得</strong>（獎品以時價計），需併入扣繳及各類所得扣繳暨免扣繳憑單，請於 WBS 5.6 與會計、人資確認扣繳方式。</p>
+  </div>
+  <div>
+    <div class="total"><span>總預算試算</span><b id="tot">—</b><span id="perHead"></span>
+      <div class="bars" id="bars"></div></div>
+    <div class="form" style="margin-top:18px" id="form"></div>
+    <p class="note">預設數字為規劃用示意值，非實際報價；藝人演出費需向經紀公司詢價，iPhone 單價以採購當時官方／企業報價為準。</p>
+  </div>
+</div></section>
+
+<section class="band alt" id="risk"><div class="wrap">
+  <h2>風險與備案：藝人檔期是最大變數，12/5 前要有答案</h2>
+  <ul class="risk">
+    <li><strong>藝人檔期或報價不符</strong>：同步向 2–3 位備案藝人詢檔，12/5 未獲確認即啟動備案；對外宣傳一律以「神秘嘉賓」處理，避免先行公布。</li>
+    <li><strong>iPhone 到貨或缺貨</strong>：12/15 前下單，指定單一型號容量，顏色以當日抽色決定；預留 5% 備品給臨時出席者。</li>
+    <li><strong>抽獎公平性質疑</strong>：抽獎系統事前公開測試，名單排除重複與未出席者，當日由稽核／福委會代表見證。</li>
+    <li><strong>流程超時</strong>：主持人手卡標註每段上限時間，致詞限 5 分鐘，部門表演每組 6 分鐘。</li>
+    <li><strong>飲酒安全</strong>：安排接駁車與代駕資訊，現場設醫護人員與急救站。</li>
+  </ul>
+</div></section>
+
+<section class="band" id="tbc"><div class="wrap">
+  <h2>待確認事項：這 8 點決定預算與時程能否定案</h2>
+  <ol class="risk">
+    <li><strong>範本有兩欄「所需資源」</strong>（G 欄與 K 欄）：我先把 G 欄填人力／負責角色，K 欄填物資、設備與預算。若兩欄另有定義請告訴我。</li>
+    <li><strong>「完成工作天數」的定義</strong>：我先填「完成該任務所需工作天數」（扣除週末與元旦）。若你要的是「截至今天已完成的天數」，我改成依今天日期計算的公式。</li>
+    <li><strong>活動日期</strong>：暫定 2027/1/22（五），整份時程從這天往回推。</li>
+    <li><strong>出席人數</strong>：預設 150 人，會影響桌數、iPhone 數量與場地大小。</li>
+    <li><strong>總預算上限</strong>（WBS 1.1）與<strong>現金獎總額</strong>（WBS 5.1）。</li>
+    <li><strong>壓軸藝人演出費與檔期</strong>（WBS 3.1）：需經紀公司報價。</li>
+    <li><strong>iPhone 型號與容量</strong>（WBS 5.2），以及是否統一顏色。</li>
+    <li><strong>場地</strong>（WBS 2.1）：是否有指定飯店或地區，以及排除項目（如是否包含眷屬、是否有二攤）。</li>
+  </ol>
+</div></section>
+<footer class="band"><div class="wrap">依使用者提供之「WBS 範本」欄位製作。日期、人數、金額均為規劃假設，請依實際核准預算與廠商報價更新。</div></footer>
+
+<script>
+{
+const EV=new Date('2027-01-22T00:00:00'),TODAY=new Date('2026-11-23T00:00:00');
+const T=[["1", "專案啟動與管理", 75, "2026-11-23", "2027-02-05", "進行中", "PM×1、總部企劃×2", "啟動週會，追蹤場地與藝人詢檔進度", 54, "—", "專案管理表單、共用雲端資料夾"], ["1.1", "確立活動目標、主題與總預算簽核", 3, "2026-11-23", "2026-11-25", "進行中", "PM×1、財務長、總經理", "—", 3, "—", "預算簽呈；總預算 [待確認]"], ["1.2", "成立籌備小組與 RACI 分工", 2, "2026-11-26", "2026-11-27", "未開始", "PM×1、各部門窗口×8", "—", 2, "1.1", "RACI 分工表"], ["1.3", "每週進度會議與風險追蹤", 52, "2026-11-30", "2027-01-20", "未開始", "PM×1、籌備小組", "11/30 召開第一次週會，建立風險清單", 37, "1.2", "會議室、風險登錄表"], ["2", "場地與餐飲", 26, "2026-11-24", "2026-12-19", "未開始", "行政總務×2", "完成場地簽約，啟動舞台燈光音響發包", 19, "—", "場地與餐飲預算"], ["2.1", "場地勘查與比價（容納人數、舞台高度、卸貨動線）", 5, "2026-11-24", "2026-11-28", "未開始", "行政×2、PM×1", "—", 4, "—", "3 家宴會廳報價單；場地名稱 [待確認]"], ["2.2", "場地簽約與支付訂金", 3, "2026-12-01", "2026-12-03", "未開始", "行政×1、財務×1、法務×1", "完成合約審閱與訂金請款", 3, "1.1、2.1", "場地合約、訂金"], ["2.3", "舞台、燈光、音響、LED 廠商發包", 9, "2026-12-04", "2026-12-12", "未開始", "活動公司、行政×1", "發出需求規格書，邀 3 家廠商報價", 6, "2.2", "舞台／LED 規格書"], ["2.4", "菜單試菜與桌數確認（含素食）", 5, "2026-12-15", "2026-12-19", "未開始", "行政×1、福委會×3", "—", 4, "2.2", "試菜費用；桌數依報名人數"], ["3", "表演節目", 59, "2026-11-24", "2027-01-21", "未開始", "總部企劃×2", "確認壓軸藝人檔期，啟動主持人邀約", 42, "—", "表演節目預算"], ["3.1", "壓軸藝人邀約：向經紀公司詢檔與報價（如林俊傑）", 12, "2026-11-24", "2026-12-05", "未開始", "企劃×1、經紀公司", "追蹤經紀公司回覆檔期與報價", 9, "—", "邀約函；演出費 [待確認]"], ["3.2", "備案藝人名單同步詢檔", 12, "2026-11-24", "2026-12-05", "未開始", "企劃×1", "取得 2–3 位備案藝人報價", 9, "—", "備案名單"], ["3.3", "藝人簽約、技術需求（rider）與保密條款", 12, "2026-12-08", "2026-12-19", "未開始", "企劃×1、法務×1", "—", 9, "3.1", "演出合約、保密協議"], ["3.4", "知名主持人邀約與腳本撰寫", 26, "2026-12-01", "2026-12-26", "未開始", "企劃×1、主持人", "提出 3 位主持人人選並詢檔", 19, "1.1", "主持費；手卡腳本"], ["3.5", "開場表演（鼓陣／舞團）邀約", 12, "2026-12-08", "2026-12-19", "未開始", "企劃×1、表演團體", "—", 9, "2.2", "開場表演費用"], ["3.6", "部門表演甄選、排練與評分規則", 32, "2026-12-15", "2027-01-15", "未開始", "各部門代表、HR×1", "—", 23, "1.2", "排練場地、評分表"], ["3.7", "總彩排與藝人走位", 1, "2027-01-21", "2027-01-21", "未開始", "全體工作人員、AV 廠商", "—", 1, "2.3、3.3、3.6", "活動場地（前一日進場費）"], ["4", "員工互動流程", 47, "2026-12-01", "2027-01-16", "未開始", "HR×2、IT×2", "定案主題服裝規則", 33, "—", "互動系統預算"], ["4.1", "主題服裝（Dress code）與最佳造型評選規則", 5, "2026-12-01", "2026-12-05", "未開始", "HR×1、企劃×1", "公告 Dress code 與評選辦法", 4, "1.1", "公告文宣"], ["4.2", "報到互動：拍照牆、AI 頭像生成站", 26, "2026-12-15", "2027-01-09", "未開始", "IT×1、企劃×1", "—", 18, "6.1", "拍照牆背板、平板×4"], ["4.3", "即時互動系統：彈幕、投票、手機搖一搖", 27, "2026-12-15", "2027-01-10", "未開始", "IT×2", "—", 18, "1.1", "互動系統租用或自建；大螢幕"], ["4.4", "全場遊戲設計：搶答、部門對抗、主管上台挑戰", 26, "2026-12-15", "2027-01-09", "未開始", "HR×1、企劃×1", "—", 18, "1.2", "遊戲道具、桌獎"], ["4.5", "高階主管敬酒與加碼紅包安排", 12, "2027-01-05", "2027-01-16", "未開始", "總經理室×1", "—", 9, "5.1", "主管加碼紅包（主管自籌）"], ["5", "抽獎與獎品", 52, "2026-12-01", "2027-01-21", "未開始", "財務×2、HR×1、採購×1", "定案獎項結構與現金獎金額", 37, "—", "現金獎與 iPhone 預算"], ["5.1", "獎項結構與現金獎金額定案", 5, "2026-12-01", "2026-12-05", "未開始", "財務×1、總經理", "提交獎項結構簽呈", 4, "1.1", "現金獎總額 [待確認]"], ["5.2", "人人有獎 iPhone：型號容量、企業採購議價", 8, "2026-12-08", "2026-12-15", "未開始", "採購×1、財務×1", "—", 6, "5.1", "iPhone × 出席人數＋5% 備品；型號 [待確認]"], ["5.3", "iPhone 交貨、點收與保管", 25, "2026-12-16", "2027-01-09", "未開始", "採購×1、行政×1", "—", 17, "5.2", "上鎖倉儲空間、點收清冊"], ["5.4", "抽獎系統開發與公開測試", 32, "2026-12-15", "2027-01-15", "未開始", "IT×1、稽核×1", "—", 23, "5.1", "抽獎程式、員工名單"], ["5.5", "現金紅包封裝與領獎簽收流程", 10, "2027-01-12", "2027-01-21", "未開始", "財務×2、HR×1", "—", 8, "5.1", "紅包袋、簽收單、保險箱"], ["5.6", "獎品稅務處理：列薪資所得、扣繳與憑單", 12, "2027-01-05", "2027-01-16", "未開始", "會計×1、HR×1", "—", 9, "5.1", "中獎名單、獎品時價資料"], ["6", "視覺與氛圍營造", 52, "2026-12-01", "2027-01-21", "未開始", "設計×1、影音×1、企劃×1", "完成主視覺初稿", 37, "—", "設計與場佈預算"], ["6.1", "主視覺、背板、邀請函設計", 12, "2026-12-01", "2026-12-12", "未開始", "設計×1", "提出 2 款主視覺提案", 9, "1.1", "設計軟體、印刷打樣"], ["6.2", "年度回顧影片與員工祝福短片", 31, "2026-12-15", "2027-01-14", "未開始", "影音×1、各部門", "—", 22, "1.2", "拍攝器材、素材授權"], ["6.3", "場佈：紅毯、燈籠、桌卡、螢光棒與拉炮", 10, "2027-01-12", "2027-01-21", "未開始", "活動公司、行政×1", "—", 8, "6.1、2.2", "場佈物料"], ["7", "宣傳與報名", 38, "2026-12-15", "2027-01-21", "未開始", "HR×1、企劃×1", "—", 27, "—", "內部公告管道"], ["7.1", "發布邀請函與線上報名", 17, "2026-12-15", "2026-12-31", "未開始", "HR×1", "—", 13, "6.1", "線上報名表單"], ["7.2", "座位安排與桌長名單", 5, "2027-01-04", "2027-01-08", "未開始", "HR×1、各部門", "—", 5, "7.1", "座位圖"], ["7.3", "倒數預告與神秘嘉賓提示", 17, "2027-01-05", "2027-01-21", "未開始", "企劃×1", "—", 13, "3.3", "預告圖文、內部郵件"], ["8", "活動當日執行", 1, "2027-01-22", "2027-01-22", "未開始", "全體工作人員", "—", 1, "—", "當日執行預算"], ["8.1", "進場佈置與設備測試", 1, "2027-01-22", "2027-01-22", "未開始", "活動公司、AV 廠商、行政×2", "—", 1, "3.7、6.3", "設備檢核表"], ["8.2", "報到、接駁、醫護與安全", 1, "2027-01-22", "2027-01-22", "未開始", "行政×2、HR×2、醫護×1", "—", 1, "7.2", "接駁車、急救站"], ["8.3", "依當日流程表執行（Run of Show）", 1, "2027-01-22", "2027-01-22", "未開始", "主持人、PM×1、舞台監督×1", "—", 1, "8.1", "流程表、主持手卡、無線電×10"], ["9", "結案", 12, "2027-01-25", "2027-02-05", "未開始", "PM×1", "—", 10, "—", "結案報告範本"], ["9.1", "滿意度問卷與照片影片分享", 5, "2027-01-25", "2027-01-29", "未開始", "HR×1", "—", 5, "8.3", "問卷表單"], ["9.2", "費用核銷與廠商尾款", 12, "2027-01-25", "2027-02-05", "未開始", "財務×1", "—", 10, "8.3", "發票、核銷單"], ["9.3", "檢討報告與明年改善建議", 5, "2027-02-01", "2027-02-05", "未開始", "PM×1", "—", 5, "9.1", "檢討報告（費用數字引用 9.2 結果）"]];
+const TSV="WBS編號\t工作/任務\t期間\t起始日\t預計完成日\t狀態\t所需資源\t下周預計要做\t完成工作天數\t前置工作\t所需資源\n1\t專案啟動與管理\t75 天\t2026/11/23\t2027/2/5\t進行中\tPM×1、總部企劃×2\t啟動週會，追蹤場地與藝人詢檔進度\t54 天\t—\t專案管理表單、共用雲端資料夾\n1.1\t確立活動目標、主題與總預算簽核\t3 天\t2026/11/23\t2026/11/25\t進行中\tPM×1、財務長、總經理\t—\t3 天\t—\t預算簽呈；總預算 [待確認]\n1.2\t成立籌備小組與 RACI 分工\t2 天\t2026/11/26\t2026/11/27\t未開始\tPM×1、各部門窗口×8\t—\t2 天\t1.1\tRACI 分工表\n1.3\t每週進度會議與風險追蹤\t52 天\t2026/11/30\t2027/1/20\t未開始\tPM×1、籌備小組\t11/30 召開第一次週會，建立風險清單\t37 天\t1.2\t會議室、風險登錄表\n2\t場地與餐飲\t26 天\t2026/11/24\t2026/12/19\t未開始\t行政總務×2\t完成場地簽約，啟動舞台燈光音響發包\t19 天\t—\t場地與餐飲預算\n2.1\t場地勘查與比價（容納人數、舞台高度、卸貨動線）\t5 天\t2026/11/24\t2026/11/28\t未開始\t行政×2、PM×1\t—\t4 天\t—\t3 家宴會廳報價單；場地名稱 [待確認]\n2.2\t場地簽約與支付訂金\t3 天\t2026/12/1\t2026/12/3\t未開始\t行政×1、財務×1、法務×1\t完成合約審閱與訂金請款\t3 天\t1.1、2.1\t場地合約、訂金\n2.3\t舞台、燈光、音響、LED 廠商發包\t9 天\t2026/12/4\t2026/12/12\t未開始\t活動公司、行政×1\t發出需求規格書，邀 3 家廠商報價\t6 天\t2.2\t舞台／LED 規格書\n2.4\t菜單試菜與桌數確認（含素食）\t5 天\t2026/12/15\t2026/12/19\t未開始\t行政×1、福委會×3\t—\t4 天\t2.2\t試菜費用；桌數依報名人數\n3\t表演節目\t59 天\t2026/11/24\t2027/1/21\t未開始\t總部企劃×2\t確認壓軸藝人檔期，啟動主持人邀約\t42 天\t—\t表演節目預算\n3.1\t壓軸藝人邀約：向經紀公司詢檔與報價（如林俊傑）\t12 天\t2026/11/24\t2026/12/5\t未開始\t企劃×1、經紀公司\t追蹤經紀公司回覆檔期與報價\t9 天\t—\t邀約函；演出費 [待確認]\n3.2\t備案藝人名單同步詢檔\t12 天\t2026/11/24\t2026/12/5\t未開始\t企劃×1\t取得 2–3 位備案藝人報價\t9 天\t—\t備案名單\n3.3\t藝人簽約、技術需求（rider）與保密條款\t12 天\t2026/12/8\t2026/12/19\t未開始\t企劃×1、法務×1\t—\t9 天\t3.1\t演出合約、保密協議\n3.4\t知名主持人邀約與腳本撰寫\t26 天\t2026/12/1\t2026/12/26\t未開始\t企劃×1、主持人\t提出 3 位主持人人選並詢檔\t19 天\t1.1\t主持費；手卡腳本\n3.5\t開場表演（鼓陣／舞團）邀約\t12 天\t2026/12/8\t2026/12/19\t未開始\t企劃×1、表演團體\t—\t9 天\t2.2\t開場表演費用\n3.6\t部門表演甄選、排練與評分規則\t32 天\t2026/12/15\t2027/1/15\t未開始\t各部門代表、HR×1\t—\t23 天\t1.2\t排練場地、評分表\n3.7\t總彩排與藝人走位\t1 天\t2027/1/21\t2027/1/21\t未開始\t全體工作人員、AV 廠商\t—\t1 天\t2.3、3.3、3.6\t活動場地（前一日進場費）\n4\t員工互動流程\t47 天\t2026/12/1\t2027/1/16\t未開始\tHR×2、IT×2\t定案主題服裝規則\t33 天\t—\t互動系統預算\n4.1\t主題服裝（Dress code）與最佳造型評選規則\t5 天\t2026/12/1\t2026/12/5\t未開始\tHR×1、企劃×1\t公告 Dress code 與評選辦法\t4 天\t1.1\t公告文宣\n4.2\t報到互動：拍照牆、AI 頭像生成站\t26 天\t2026/12/15\t2027/1/9\t未開始\tIT×1、企劃×1\t—\t18 天\t6.1\t拍照牆背板、平板×4\n4.3\t即時互動系統：彈幕、投票、手機搖一搖\t27 天\t2026/12/15\t2027/1/10\t未開始\tIT×2\t—\t18 天\t1.1\t互動系統租用或自建；大螢幕\n4.4\t全場遊戲設計：搶答、部門對抗、主管上台挑戰\t26 天\t2026/12/15\t2027/1/9\t未開始\tHR×1、企劃×1\t—\t18 天\t1.2\t遊戲道具、桌獎\n4.5\t高階主管敬酒與加碼紅包安排\t12 天\t2027/1/5\t2027/1/16\t未開始\t總經理室×1\t—\t9 天\t5.1\t主管加碼紅包（主管自籌）\n5\t抽獎與獎品\t52 天\t2026/12/1\t2027/1/21\t未開始\t財務×2、HR×1、採購×1\t定案獎項結構與現金獎金額\t37 天\t—\t現金獎與 iPhone 預算\n5.1\t獎項結構與現金獎金額定案\t5 天\t2026/12/1\t2026/12/5\t未開始\t財務×1、總經理\t提交獎項結構簽呈\t4 天\t1.1\t現金獎總額 [待確認]\n5.2\t人人有獎 iPhone：型號容量、企業採購議價\t8 天\t2026/12/8\t2026/12/15\t未開始\t採購×1、財務×1\t—\t6 天\t5.1\tiPhone × 出席人數＋5% 備品；型號 [待確認]\n5.3\tiPhone 交貨、點收與保管\t25 天\t2026/12/16\t2027/1/9\t未開始\t採購×1、行政×1\t—\t17 天\t5.2\t上鎖倉儲空間、點收清冊\n5.4\t抽獎系統開發與公開測試\t32 天\t2026/12/15\t2027/1/15\t未開始\tIT×1、稽核×1\t—\t23 天\t5.1\t抽獎程式、員工名單\n5.5\t現金紅包封裝與領獎簽收流程\t10 天\t2027/1/12\t2027/1/21\t未開始\t財務×2、HR×1\t—\t8 天\t5.1\t紅包袋、簽收單、保險箱\n5.6\t獎品稅務處理：列薪資所得、扣繳與憑單\t12 天\t2027/1/5\t2027/1/16\t未開始\t會計×1、HR×1\t—\t9 天\t5.1\t中獎名單、獎品時價資料\n6\t視覺與氛圍營造\t52 天\t2026/12/1\t2027/1/21\t未開始\t設計×1、影音×1、企劃×1\t完成主視覺初稿\t37 天\t—\t設計與場佈預算\n6.1\t主視覺、背板、邀請函設計\t12 天\t2026/12/1\t2026/12/12\t未開始\t設計×1\t提出 2 款主視覺提案\t9 天\t1.1\t設計軟體、印刷打樣\n6.2\t年度回顧影片與員工祝福短片\t31 天\t2026/12/15\t2027/1/14\t未開始\t影音×1、各部門\t—\t22 天\t1.2\t拍攝器材、素材授權\n6.3\t場佈：紅毯、燈籠、桌卡、螢光棒與拉炮\t10 天\t2027/1/12\t2027/1/21\t未開始\t活動公司、行政×1\t—\t8 天\t6.1、2.2\t場佈物料\n7\t宣傳與報名\t38 天\t2026/12/15\t2027/1/21\t未開始\tHR×1、企劃×1\t—\t27 天\t—\t內部公告管道\n7.1\t發布邀請函與線上報名\t17 天\t2026/12/15\t2026/12/31\t未開始\tHR×1\t—\t13 天\t6.1\t線上報名表單\n7.2\t座位安排與桌長名單\t5 天\t2027/1/4\t2027/1/8\t未開始\tHR×1、各部門\t—\t5 天\t7.1\t座位圖\n7.3\t倒數預告與神秘嘉賓提示\t17 天\t2027/1/5\t2027/1/21\t未開始\t企劃×1\t—\t13 天\t3.3\t預告圖文、內部郵件\n8\t活動當日執行\t1 天\t2027/1/22\t2027/1/22\t未開始\t全體工作人員\t—\t1 天\t—\t當日執行預算\n8.1\t進場佈置與設備測試\t1 天\t2027/1/22\t2027/1/22\t未開始\t活動公司、AV 廠商、行政×2\t—\t1 天\t3.7、6.3\t設備檢核表\n8.2\t報到、接駁、醫護與安全\t1 天\t2027/1/22\t2027/1/22\t未開始\t行政×2、HR×2、醫護×1\t—\t1 天\t7.2\t接駁車、急救站\n8.3\t依當日流程表執行（Run of Show）\t1 天\t2027/1/22\t2027/1/22\t未開始\t主持人、PM×1、舞台監督×1\t—\t1 天\t8.1\t流程表、主持手卡、無線電×10\n9\t結案\t12 天\t2027/1/25\t2027/2/5\t未開始\tPM×1\t—\t10 天\t—\t結案報告範本\n9.1\t滿意度問卷與照片影片分享\t5 天\t2027/1/25\t2027/1/29\t未開始\tHR×1\t—\t5 天\t8.3\t問卷表單\n9.2\t費用核銷與廠商尾款\t12 天\t2027/1/25\t2027/2/5\t未開始\t財務×1\t—\t10 天\t8.3\t發票、核銷單\n9.3\t檢討報告與明年改善建議\t5 天\t2027/2/1\t2027/2/5\t未開始\tPM×1\t—\t5 天\t9.1\t檢討報告（費用數字引用 9.2 結果）\n";
+const d=s=>new Date(s+'T00:00:00');
+const fmt=x=>`${x.getFullYear()}/${x.getMonth()+1}/${x.getDate()}`;
+const STN=['未開始','進行中','已完成'];
+let st={};try{st=JSON.parse(localStorage.getItem('wy-st2')||'{}')}catch(e){}
+const closed=new Set();let nextOnly=false;
+const rows=T.map(r=>({id:r[0],task:r[1],dur:r[2],A:d(r[3]),B:d(r[4]),s0:STN.indexOf(r[5]),res:r[6],next:r[7],wd:r[8],pre:r[9],res2:r[10],l1:!r[0].includes('.'),grp:r[0].split('.')[0]}));
+const kids=rows.filter(r=>!r.l1);
+const stOf=r=>st[r.id]??r.s0;
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\[待確認\]/g,'<span class="crit">待確認</span>');
+function draw(){
+ const tb=document.querySelector('#wbsT tbody');
+ tb.innerHTML=rows.filter(r=>{if(nextOnly)return r.next!=='—';return r.l1||!closed.has(r.grp)}).map(r=>{
+  let stc;if(r.l1){const ks=kids.filter(k=>k.grp===r.grp).map(stOf);const v=ks.every(x=>x===2)?2:ks.some(x=>x>0)?1:0;stc=`<span class="st s${v}" style="cursor:default">${STN[v]}</span>`}
+  else{const v=stOf(r);stc=`<button class="st s${v}" data-id="${r.id}" aria-label="${r.id} 狀態：${STN[v]}，點擊切換">${STN[v]}</button>`}
+  return `<tr class="${r.l1?'l1':'l2'}"><td class="id">${r.l1&&!nextOnly?`<button class="tg" data-g="${r.grp}" aria-expanded="${!closed.has(r.grp)}" aria-label="展開或收合 ${r.task}">${closed.has(r.grp)?'▸':'▾'}</button>`:''}${r.id}</td><td class="task">${esc(r.task)}</td><td class="num">${r.dur} 天</td><td class="date">${fmt(r.A)}</td><td class="date">${fmt(r.B)}</td><td>${stc}</td><td class="res">${esc(r.res)}</td><td class="res">${esc(r.next)}</td><td class="num">${r.wd} 天</td><td class="date">${r.pre}</td><td class="res">${esc(r.res2)}</td></tr>`}).join('');
+ const done=kids.filter(k=>stOf(k)===2).length,run=kids.filter(k=>stOf(k)===1).length;
+ document.getElementById('prog').textContent=`進度：${done} 項完成、${run} 項進行中，共 ${kids.length} 個工作包`;
+}
+document.getElementById('wbsT').addEventListener('click',e=>{
+ const g=e.target.closest('.tg');if(g){closed.has(g.dataset.g)?closed.delete(g.dataset.g):closed.add(g.dataset.g);draw();return}
+ const b=e.target.closest('button.st');if(b){const r=rows.find(x=>x.id===b.dataset.id);st[r.id]=(stOf(r)+1)%3;try{localStorage.setItem('wy-st2',JSON.stringify(st))}catch(err){}draw();document.querySelector(`button.st[data-id="${r.id}"]`)?.focus()}
+});
+document.getElementById('expAll').onclick=()=>{closed.clear();draw()};
+document.getElementById('colAll').onclick=()=>{rows.filter(r=>r.l1).forEach(r=>closed.add(r.grp));draw()};
+document.getElementById('nextOnly').onclick=e=>{nextOnly=!nextOnly;e.currentTarget.setAttribute('aria-pressed',nextOnly);draw()};
+document.getElementById('tsvBox').textContent=TSV;
+document.getElementById('copyTsv').onclick=async e=>{const b=e.currentTarget;try{await navigator.clipboard.writeText(TSV);b.textContent='已複製，貼到範本 A1 即可'}catch(err){b.textContent='無法自動複製，請展開下方純文字手動複製'}setTimeout(()=>b.textContent='複製表格（可直接貼入範本）',3000)};
+document.getElementById('kCount').textContent=kids.length+' 個';
+document.getElementById('kDays').textContent=Math.round((EV-TODAY)/864e5)+' 天';
+
+const ROS=[
+['17:00','報到暖身','拍照牆、AI 頭像生成站、領取螢光棒與抽獎序號；暖場 DJ'],
+['17:50','入座','播放倒數影片，主持人暖場、教學手機互動系統'],
+['18:00','開場秀','鼓陣／舞團開場，燈光全暗後主持人登場',1],
+['18:10','董事長致詞＋年度回顧影片','致詞限 5 分鐘，影片穿插員工祝福'],
+['18:20','開席・第一輪現金抽獎','普獎抽出，彈幕即時恭喜'],
+['18:40','部門表演競賽','每組 6 分鐘，全場手機即時投票，結果當場揭曉'],
+['19:30','主管敬酒＋加碼抽獎','高階主管逐桌敬酒，上台宣布加碼紅包',1],
+['19:45','全場互動遊戲','搶答、部門對抗、手機搖一搖，勝隊獲桌獎'],
+['20:05','神秘嘉賓壓軸演出','知名藝人（如林俊傑，依檔期確認）約 30 分鐘',1],
+['20:40','三獎、二獎、頭獎現金大抽獎','逐步揭曉，頭獎由董事長親抽',1],
+['20:55','人人有獎：iPhone 全場同步開箱','每桌桌長發放，抽「今年幸運色」，全場一起拆',1],
+['21:10','大合照・散場','頒發最佳表演與最佳造型，接駁車發車']
+];
+document.getElementById('rosL').innerHTML=ROS.map(r=>`<div class="${r[3]?'hot':''}"><time>${r[0]}</time><p style="margin:0"><b>${r[1]}</b><span>${r[2]}</span></p></div>`).join('');
+
+const F=[
+['head','出席人數（人）',150],['iph','iPhone 單價（元，示意）',29900],
+['p1','頭獎現金（元）× 1',200000],['p2','二獎現金（元）× 2',100000],['p3','三獎現金（元）× 5',50000],['p4','普獎現金（元）× 20',10000],
+['art','壓軸藝人演出費（元，示意，待報價）',3000000],['host','主持人＋開場表演（元）',400000],
+['table','每桌餐費（10 人一桌，元）',18000],['av','場地＋舞台燈光音響（元）',800000],['deco','視覺、場佈、影片、互動系統（元）',350000]
+];
+let v={};try{v=JSON.parse(localStorage.getItem('wy-b')||'{}')}catch(e){}
+document.getElementById('form').innerHTML=F.map(f=>`<label for="f-${f[0]}">${f[1]}<input id="f-${f[0]}" type="number" min="0" step="1" inputmode="numeric" value="${v[f[0]]??f[2]}"></label>`).join('');
+const n=x=>'NT$ '+Math.round(x).toLocaleString('zh-TW');
+function calc(){
+ const g=k=>Math.max(0,+document.getElementById('f-'+k).value||0);
+ F.forEach(f=>v[f[0]]=g(f[0]));try{localStorage.setItem('wy-b',JSON.stringify(v))}catch(e){}
+ const H=g('head'),iphone=H*g('iph'),cash=g('p1')+g('p2')*2+g('p3')*5+g('p4')*20,show=g('art')+g('host'),food=Math.ceil(H/10)*g('table'),venue=g('av')+g('deco');
+ const tot=iphone+cash+show+food+venue;
+ document.getElementById('tot').textContent=n(tot);document.getElementById('kBudget').textContent=n(tot);
+ document.getElementById('perHead').textContent=H?`每人平均 ${n(tot/H)}`:'';
+ const parts=[['人人有獎 iPhone',iphone],['現金抽獎',cash],['藝人與表演',show],['餐飲（'+Math.ceil(H/10)+' 桌）',food],['場地、設備與佈置',venue]];
+ document.getElementById('bars').innerHTML=parts.map(p=>`<div class="bar">${p[0]}　${n(p[1])}（${tot?(p[1]/tot*100).toFixed(0):0}%）<div><i style="width:${tot?p[1]/tot*100:0}%"></i></div></div>`).join('');
+ document.getElementById('prizeB').innerHTML=[
+  ['頭獎',1,n(g('p1')),g('p1')],['二獎',2,n(g('p2')),g('p2')*2],['三獎',5,n(g('p3')),g('p3')*5],['普獎',20,n(g('p4')),g('p4')*20],
+  ['人人有獎',H,'iPhone 一台（'+n(g('iph'))+'）',iphone],['主管加碼','不限','現金紅包（主管自掏）',0]
+ ].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]?n(r[3]):'—'}</td></tr>`).join('')+`<tr><td><strong>合計</strong></td><td></td><td></td><td><strong>${n(cash+iphone)}</strong></td></tr>`;
+}
+document.getElementById('form').addEventListener('input',calc);
+draw();calc();
+}
+</script>
+</body>
+</html>

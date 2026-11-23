@@ -17,6 +17,7 @@ Focus: SQL, Python (pandas), Tableau, and Git. Work is practice-level and update
 | `06-Python-muti-list` | pandas practice: DataFrame / Series, column selection, boolean indexing, groupby, missing values (`isna` / `fillna` / `dropna`), timestamps; `uv` project files (`pyproject.toml`, `uv.lock`) |
 | `07-Tableau` | Tableau workbooks from class exercises |
 | `08-ELK` | ELK (Elasticsearch / Kibana) practice: movie-dataset aggregations exported from Kibana as CSV (`1112`), Kibana Lens charts — heatmap, time-series bar, pie (`1113`); Kibana saved-objects export of the 1112–1113 dashboards (`1112-1113_Dashboard.ndjson`, import via Stack Management → Saved Objects) |
+| `10-Project-Management` | Project management assignment: year-end party (尾牙) planning WBS built on the course template (`尾牙專案WBS.xlsx`, with formulas for duration and working days), an interactive HTML5 version (`尾牙專案WBS.html`), and the presentation script (`講稿.md`) |
 | `python-env-lab` | Python environment setup with `uv` (`pyproject.toml`, `requirements.txt`) |
 | `src` | Package skeleton created with `uv` |
 
